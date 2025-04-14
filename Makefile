@@ -21,8 +21,14 @@ clean:
 	-\rm -r src/sim/vsim_stacktrace.vstf
 	-\rm -r src/sim/vsim.wlf
 
-sim_tb:
+sim_tb_c:
 	cd src/sim; vlog -f dut.f
 	cd src/sim; vlog tb_crc_top.v
 	cd src/sim; vopt tb_crc_top -o tb_optimized +acc
 	cd src/sim; vsim -c tb_optimized -do "run -all; exit -code 0"
+
+sim_tb:
+	cd src/sim; vlog -f dut.f
+	cd src/sim; vlog tb_crc_top.v
+	cd src/sim; vopt tb_crc_top -o tb_optimized +acc
+	cd src/sim; vsim tb_optimized -do "run -all;"
